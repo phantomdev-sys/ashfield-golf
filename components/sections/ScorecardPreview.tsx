@@ -6,28 +6,23 @@ import { ArrowRight } from "lucide-react";
 export default function ScorecardPreview() {
   const preview = HOLES.slice(0, 9);
   return (
-    <section style={{ background: "#1a3a2a", padding: "5rem 2rem", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: -80, right: -80, width: 400, height: 400, borderRadius: "50%", border: "1px solid rgba(201,168,76,0.07)" }} />
+    <section style={{ background: "#1a3a2a", padding: "4rem 1.25rem", position: "relative", overflow: "hidden" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem", alignItems: "start" }}>
           <div>
             <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>The Course</span>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 3vw, 38px)", color: "#f5f0e8", margin: "0.5rem 0 1rem", lineHeight: 1.2 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(26px, 4vw, 38px)", color: "#f5f0e8", margin: "0.5rem 0 1rem", lineHeight: 1.2 }}>
               18 Holes, 18 <em style={{ color: "#c9a84c" }}>Stories</em>
             </h2>
-            <p style={{ fontSize: 15, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, marginBottom: "1.5rem", fontWeight: 300 }}>
-              Each hole at Ashfield carries a name rooted in the land — from Fáilte (Welcome) on the first tee to Slán Abhaile (Safe Home) on the 18th green. Our interactive scorecard lets you track your round in real time, calculating stableford points and net scores on the fly.
+            <p style={{ fontSize: "clamp(13px, 2vw, 15px)", color: "rgba(245,240,232,0.7)", lineHeight: 1.7, marginBottom: "1.5rem", fontWeight: 300 }}>
+              Each hole carries a name rooted in the land — from Fáilte (Welcome) on the first tee to Slán Abhaile (Safe Home) on the 18th green. Our interactive scorecard lets you track your round in real time.
             </p>
-            <Link href="/scorecard" style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "#c9a84c", color: "#1a3a2a", padding: "12px 24px",
-              borderRadius: 2, fontWeight: 500, fontSize: 14, textDecoration: "none",
-            }}>
-              Open Scorecard <ArrowRight size={16} />
+            <Link href="/scorecard" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "12px 22px", borderRadius: 2, fontWeight: 500, fontSize: 14, textDecoration: "none" }}>
+              Open Scorecard <ArrowRight size={15} />
             </Link>
           </div>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, minWidth: 340 }}>
               <thead>
                 <tr>
                   {["Hole","Name","Yards","Par","SI"].map(h => (
@@ -39,7 +34,7 @@ export default function ScorecardPreview() {
                 {preview.map((h) => (
                   <tr key={h.hole} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                     <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>{h.hole}</td>
-                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.9)", fontStyle: "italic" }}>{h.name}</td>
+                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.9)", fontStyle: "italic", whiteSpace: "nowrap" }}>{h.name}</td>
                     <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.gentsYards}</td>
                     <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.par}</td>
                     <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.si}</td>
