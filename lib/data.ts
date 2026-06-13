@@ -2,7 +2,7 @@ export const COURSE_INFO = {
   name: "Ashfield Golf Club",
   tagline: "The Home of Golf in South Armagh",
   established: 1990,
-  yards: 5606,
+  yards: 5620,
   par: 69,
   holes: 18,
   address: "Cregganduff Road, Newry, Co. Down, BT35 0NA",
@@ -14,44 +14,8 @@ export const COURSE_INFO = {
   coordinates: { lat: 54.17, lng: -6.38 },
 };
 
-export const HOLES = [
-  { hole: 1,  name: "Fáilte",            gentsYards: 337, par: 4, si: 11, ladiesYards: 337, ladiesPar: 4, ladiesSI: 9  },
-  { hole: 2,  name: "The Green Knowe",   gentsYards: 334, par: 4, si: 7,  ladiesYards: 334, ladiesPar: 4, ladiesSI: 3  },
-  { hole: 3,  name: "Chapel View",       gentsYards: 167, par: 3, si: 15, ladiesYards: 167, ladiesPar: 3, ladiesSI: 11 },
-  { hole: 4,  name: "Bourtree Gap",      gentsYards: 389, par: 4, si: 2,  ladiesYards: 389, ladiesPar: 5, ladiesSI: 13 },
-  { hole: 5,  name: "The Wishing Well",  gentsYards: 343, par: 4, si: 3,  ladiesYards: 283, ladiesPar: 4, ladiesSI: 7  },
-  { hole: 6,  name: "Nelson's March",    gentsYards: 194, par: 3, si: 5,  ladiesYards: 194, ladiesPar: 3, ladiesSI: 1  },
-  { hole: 7,  name: "The Mullins",       gentsYards: 254, par: 4, si: 18, ladiesYards: 254, ladiesPar: 4, ladiesSI: 15 },
-  { hole: 8,  name: "The Ramparts",      gentsYards: 155, par: 3, si: 16, ladiesYards: 155, ladiesPar: 3, ladiesSI: 17 },
-  { hole: 9,  name: "The Drumlins",      gentsYards: 493, par: 5, si: 12, ladiesYards: 445, ladiesPar: 5, ladiesSI: 5  },
-  { hole: 10, name: "The Brae",          gentsYards: 344, par: 4, si: 8,  ladiesYards: 314, ladiesPar: 4, ladiesSI: 6  },
-  { hole: 11, name: "Rowan Drive",       gentsYards: 360, par: 4, si: 6,  ladiesYards: 310, ladiesPar: 4, ladiesSI: 8  },
-  { hole: 12, name: "Whinney Bridge",    gentsYards: 335, par: 4, si: 13, ladiesYards: 295, ladiesPar: 4, ladiesSI: 12 },
-  { hole: 13, name: "Cranny",            gentsYards: 142, par: 3, si: 17, ladiesYards: 142, ladiesPar: 3, ladiesSI: 18 },
-  { hole: 14, name: "The Three Piers",   gentsYards: 334, par: 4, si: 10, ladiesYards: 334, ladiesPar: 4, ladiesSI: 2  },
-  { hole: 15, name: "The Orchard",       gentsYards: 480, par: 5, si: 9,  ladiesYards: 440, ladiesPar: 5, ladiesSI: 10 },
-  { hole: 16, name: "The Quiet Corner",  gentsYards: 153, par: 3, si: 14, ladiesYards: 153, ladiesPar: 3, ladiesSI: 16 },
-  { hole: 17, name: "Bruach na h-Abhna", gentsYards: 444, par: 4, si: 1,  ladiesYards: 380, ladiesPar: 5, ladiesSI: 14 },
-  { hole: 18, name: "Slán Abhaile",      gentsYards: 348, par: 4, si: 4,  ladiesYards: 305, ladiesPar: 4, ladiesSI: 4  },
-];
-
-export const OUT_HOLES = HOLES.slice(0, 9);
-export const IN_HOLES  = HOLES.slice(9);
-
-export const TOTALS = {
-  gentsOut:   HOLES.slice(0,9).reduce((s,h) => s + h.gentsYards, 0),  // 2666
-  parOut:     HOLES.slice(0,9).reduce((s,h) => s + h.par, 0),          // 34
-  ladiesOut:  HOLES.slice(0,9).reduce((s,h) => s + h.ladiesYards, 0),  // 2558
-  ladiesParOut: HOLES.slice(0,9).reduce((s,h) => s + h.ladiesPar, 0),  // 35
-  gentsIn:    HOLES.slice(9).reduce((s,h) => s + h.gentsYards, 0),     // 2940
-  parIn:      HOLES.slice(9).reduce((s,h) => s + h.par, 0),            // 35
-  ladiesIn:   HOLES.slice(9).reduce((s,h) => s + h.ladiesYards, 0),    // 2673
-  ladiesParIn: HOLES.slice(9).reduce((s,h) => s + h.ladiesPar, 0),     // 36
-  gentsTotal: 5606,
-  parTotal:   69,
-  ladiesTotal: 5231,
-  ladiesParTotal: 71,
-};
+// Hole / tee data lives in lib/holes.ts (HOLES + TEES) — the verified
+// three-tee source. Import scorecard/course data from there, not here.
 
 export const MEMBERSHIP_RATES = [
   { category: "Adult Male",                        price: "£500", note: "or € rate" },
@@ -88,7 +52,7 @@ export const LOCAL_RULES = [
 // SEO keywords for Northern Ireland golf
 export const SEO = {
   siteTitle: "Ashfield Golf Club | South Armagh, Northern Ireland",
-  siteDescription: "Ashfield Golf Club — a 5,606 yard par 69 parkland golf course in South Armagh, Northern Ireland. GUI affiliated since 1992. Visitors welcome. Society packages available. 1 hour from Dublin and Belfast.",
+  siteDescription: "Ashfield Golf Club — a 5,620 yard par 69 parkland golf course in South Armagh, Northern Ireland. GUI affiliated since 1992. Visitors welcome. Society packages available. 1 hour from Dublin and Belfast.",
   keywords: [
     "golf club South Armagh",
     "golf course Newry",

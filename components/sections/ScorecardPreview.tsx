@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { HOLES } from "@/lib/data";
+import { HOLES, TEES } from "@/lib/holes";
 import { ArrowRight } from "lucide-react";
 
 export default function ScorecardPreview() {
@@ -32,18 +32,18 @@ export default function ScorecardPreview() {
               </thead>
               <tbody>
                 {preview.map((h) => (
-                  <tr key={h.hole} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                    <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>{h.hole}</td>
+                  <tr key={h.number} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                    <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>{h.number}</td>
                     <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.9)", fontStyle: "italic", whiteSpace: "nowrap" }}>{h.name}</td>
-                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.gentsYards}</td>
-                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.par}</td>
-                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.si}</td>
+                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.white.yards}</td>
+                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.white.par}</td>
+                    <td style={{ padding: "9px 10px", color: "rgba(245,240,232,0.7)", textAlign: "center" }}>{h.white.si}</td>
                   </tr>
                 ))}
                 <tr style={{ background: "rgba(201,168,76,0.1)", borderTop: "2px solid rgba(201,168,76,0.3)" }}>
                   <td colSpan={2} style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>OUT</td>
-                  <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>2,666</td>
-                  <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>34</td>
+                  <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>{TEES.white.out.yards.toLocaleString()}</td>
+                  <td style={{ padding: "9px 10px", color: "#c9a84c", fontWeight: 500, textAlign: "center" }}>{TEES.white.out.par}</td>
                   <td style={{ padding: "9px 10px", color: "#c9a84c", textAlign: "center" }}>—</td>
                 </tr>
               </tbody>

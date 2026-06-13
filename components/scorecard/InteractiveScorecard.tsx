@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
-import { HOLES, TOTALS } from "@/lib/data";
+import { HOLES, TEES } from "@/lib/holes";
 import { RotateCcw, Printer } from "lucide-react";
 
-type TeeType = "gents" | "ladies";
+type TeeKey = keyof typeof TEES; // "white" | "green" | "ladies"
 
+// NOTE: This allocates the entered `handicap` directly by stroke index
+// (raw playing-handicap-by-SI). It reads par AND si from the SELECTED tee.
+// A full WHS conversion (HI × Slope/113 + (CR − Par)) is intentionally not
+// applied here — see CR/Slope readout for the data it would need.
 function calcStableford(score: number, par: number, si: number, handicap: number): number {
   if (score === 0) return 0;
   const shots = Math.floor(handicap / 18) + (si <= (handicap % 18) ? 1 : 0);
@@ -14,23 +18,25 @@ function calcStableford(score: number, par: number, si: number, handicap: number
 }
 
 export default function InteractiveScorecard() {
-  const [tee, setTee]           = useState<TeeType>("gents");
+  const [tee, setTee]           = useState<TeeKey>("white");
   const [handicap, setHandicap] = useState(18);
   const [scores, setScores]     = useState<Record<number, number>>({});
+
+  const meta = TEES[tee];
 
   const setScore = (hole: number, val: string) => {
     const n = parseInt(val);
     setScores((prev) => ({ ...prev, [hole]: isNaN(n) ? 0 : n }));
   };
 
-  const totalScoreOut = HOLES.slice(0,9).reduce((s,h) => s + (scores[h.hole] || 0), 0);
-  const totalScoreIn  = HOLES.slice(9).reduce((s,h) => s + (scores[h.hole] || 0), 0);
+  const totalScoreOut = HOLES.slice(0,9).reduce((s,h) => s + (scores[h.number] || 0), 0);
+  const totalScoreIn  = HOLES.slice(9).reduce((s,h) => s + (scores[h.number] || 0), 0);
   const totalScore    = totalScoreOut + totalScoreIn;
-  const parOut        = tee === "gents" ? TOTALS.parOut : TOTALS.ladiesParOut;
-  const parIn         = tee === "gents" ? TOTALS.parIn  : TOTALS.ladiesParIn;
-  const parTotal      = tee === "gents" ? TOTALS.parTotal : TOTALS.ladiesParTotal;
-  const sfOut         = HOLES.slice(0,9).reduce((s,h) => s + calcStableford(scores[h.hole]||0, h.par, tee === "gents" ? h.si : h.ladiesSI, handicap), 0);
-  const sfIn          = HOLES.slice(9).reduce((s,h) => s + calcStableford(scores[h.hole]||0, h.par, tee === "gents" ? h.si : h.ladiesSI, handicap), 0);
+  const parOut        = meta.out.par;
+  const parIn         = meta.in.par;
+  const parTotal      = meta.total.par;
+  const sfOut         = HOLES.slice(0,9).reduce((s,h) => s + calcStableford(scores[h.number]||0, h[tee].par, h[tee].si, handicap), 0);
+  const sfIn          = HOLES.slice(9).reduce((s,h) => s + calcStableford(scores[h.number]||0, h[tee].par, h[tee].si, handicap), 0);
   const sfTotal       = sfOut + sfIn;
   const vsParTotal    = totalScore > 0 ? totalScore - parTotal : 0;
 
@@ -51,17 +57,18 @@ export default function InteractiveScorecard() {
   };
 
   const renderRows = (holeSlice: typeof HOLES) => holeSlice.map((h) => {
-    const par   = h.par;
-    const si    = tee === "gents" ? h.si : h.ladiesSI;
-    const score = scores[h.hole] || 0;
+    const sel   = h[tee];
+    const par   = sel.par;
+    const si    = sel.si;
+    const score = scores[h.number] || 0;
     const sf    = calcStableford(score, par, si, handicap);
     const vsPar = score > 0 ? score - par : null;
 
     return (
-      <tr key={h.hole}>
-        <td style={{ ...tdStyle, fontWeight: 500, color: "#c9a84c" }}>{h.hole}</td>
+      <tr key={h.number}>
+        <td style={{ ...tdStyle, fontWeight: 500, color: "#c9a84c" }}>{h.number}</td>
         <td style={{ ...tdStyle, textAlign: "left", color: "rgba(245,240,232,0.9)", fontStyle: "italic", fontSize: 12 }}>{h.name}</td>
-        <td style={tdStyle}>{tee === "gents" ? h.gentsYards : h.ladiesYards}</td>
+        <td style={tdStyle}>{sel.yards}</td>
         <td style={tdStyle}>{par}</td>
         <td style={tdStyle}>{si}</td>
         <td style={{ ...tdStyle, padding: "6px 4px" }}>
@@ -71,7 +78,7 @@ export default function InteractiveScorecard() {
             min={1}
             max={15}
             value={score || ""}
-            onChange={(e) => setScore(h.hole, e.target.value)}
+            onChange={(e) => setScore(h.number, e.target.value)}
             placeholder="—"
             style={{
               width: 44, textAlign: "center",
@@ -104,18 +111,19 @@ export default function InteractiveScorecard() {
       {/* Controls */}
       <div style={{ padding: "1.25rem", borderBottom: "1px solid rgba(201,168,76,0.15)" }}>
         {/* Tee + Handicap row */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
           <div style={{ display: "flex", gap: 0 }}>
-            {(["gents","ladies"] as TeeType[]).map((t) => (
+            {(["white","green","ladies"] as TeeKey[]).map((t, i) => (
               <button key={t} onClick={() => setTee(t)} style={{
                 padding: "9px 18px", fontSize: 13, cursor: "pointer",
                 background: tee === t ? "#c9a84c" : "transparent",
                 color: tee === t ? "#1a3a2a" : "rgba(245,240,232,0.6)",
                 border: "1px solid rgba(201,168,76,0.3)",
-                borderRadius: t === "gents" ? "2px 0 0 2px" : "0 2px 2px 0",
+                borderLeft: i === 0 ? "1px solid rgba(201,168,76,0.3)" : "none",
+                borderRadius: i === 0 ? "2px 0 0 2px" : i === 2 ? "0 2px 2px 0" : "0",
                 fontWeight: tee === t ? 500 : 400,
               }}>
-                {t === "gents" ? "Men's" : "Ladies'"}
+                {TEES[t].label}
               </button>
             ))}
           </div>
@@ -133,6 +141,13 @@ export default function InteractiveScorecard() {
               <Printer size={14} /> Print
             </button>
           </div>
+        </div>
+
+        {/* Selected tee rating */}
+        <div style={{ display: "flex", gap: "1.25rem", flexWrap: "wrap", fontSize: 12, color: "rgba(245,240,232,0.55)", letterSpacing: "0.5px", marginBottom: totalScore > 0 ? "1rem" : 0 }}>
+          <span><span style={{ color: "#c9a84c" }}>{meta.label} Tees</span> · {meta.course} Course</span>
+          <span>CR <span style={{ color: "#e8c97a" }}>{meta.courseRating.toFixed(1)}</span> · Slope <span style={{ color: "#e8c97a" }}>{meta.slope}</span></span>
+          <span>{meta.total.yards.toLocaleString()} yds · Par {meta.total.par}</span>
         </div>
 
         {/* Summary pills — only show when scores entered */}
@@ -175,7 +190,7 @@ export default function InteractiveScorecard() {
             {renderRows(HOLES.slice(0,9))}
             <tr>
               <td colSpan={2} style={subtotalStyle}>OUT</td>
-              <td style={subtotalStyle}>{tee === "gents" ? TOTALS.gentsOut : TOTALS.ladiesOut}</td>
+              <td style={subtotalStyle}>{meta.out.yards}</td>
               <td style={subtotalStyle}>{parOut}</td>
               <td style={subtotalStyle}>—</td>
               <td style={subtotalStyle}>{totalScoreOut || "—"}</td>
@@ -185,7 +200,7 @@ export default function InteractiveScorecard() {
             {renderRows(HOLES.slice(9))}
             <tr>
               <td colSpan={2} style={subtotalStyle}>IN</td>
-              <td style={subtotalStyle}>{tee === "gents" ? TOTALS.gentsIn : TOTALS.ladiesIn}</td>
+              <td style={subtotalStyle}>{meta.in.yards}</td>
               <td style={subtotalStyle}>{parIn}</td>
               <td style={subtotalStyle}>—</td>
               <td style={subtotalStyle}>{totalScoreIn || "—"}</td>
@@ -194,7 +209,7 @@ export default function InteractiveScorecard() {
             </tr>
             <tr style={{ background: "rgba(201,168,76,0.08)" }}>
               <td colSpan={2} style={{ ...subtotalStyle, fontSize: 14, color: "#e8c97a" }}>TOTAL</td>
-              <td style={{ ...subtotalStyle, color: "#e8c97a" }}>{tee === "gents" ? TOTALS.gentsTotal : TOTALS.ladiesTotal}</td>
+              <td style={{ ...subtotalStyle, color: "#e8c97a" }}>{meta.total.yards.toLocaleString()}</td>
               <td style={{ ...subtotalStyle, color: "#e8c97a" }}>{parTotal}</td>
               <td style={{ ...subtotalStyle, color: "#e8c97a" }}>—</td>
               <td style={{ ...subtotalStyle, color: "#e8c97a", fontSize: 15 }}>{totalScore || "—"}</td>

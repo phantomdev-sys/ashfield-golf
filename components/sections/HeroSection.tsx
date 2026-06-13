@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const STATS = [
-  { num: "5,606", label: "Total Yards" },
+  { num: "5,620", label: "Total Yards" },
   { num: "Par 69", label: "Course Par" },
   { num: "18",    label: "Holes" },
   { num: "1990",  label: "Est." },
@@ -24,7 +24,7 @@ export default function HeroSection() {
             The Home of Golf<br />in <em style={{ color: "#c9a84c" }}>South Armagh</em>
           </h1>
           <p style={{ fontSize: "clamp(14px, 2vw, 17px)", color: "rgba(245,240,232,0.78)", lineHeight: 1.7, marginBottom: "2rem", fontWeight: 300 }}>
-            A 5,606 yard par 69 parkland course, GUI affiliated since 1992. Set in the heart of South Armagh — 1 hour from both Dublin and Belfast.
+            A 5,620 yard par 69 parkland course, GUI affiliated since 1992. Set in the heart of South Armagh — 1 hour from both Dublin and Belfast.
           </p>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <Link href="/visitors" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 22px", borderRadius: 2, fontWeight: 500, fontSize: 14, textDecoration: "none" }}>
