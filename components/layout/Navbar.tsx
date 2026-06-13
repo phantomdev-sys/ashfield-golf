@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: "Competitions", href: "/competitions" },
   { label: "About",        href: "/about" },
   { label: "Gallery",      href: "/gallery" },
+  { label: "Sponsors",     href: "/sponsors" },
   { label: "Contact",      href: "/contact" },
 ];
 

@@ -34,6 +34,21 @@ export const GREEN_FEES = [
   { type: "Monday–Thursday", price: "£20", note: "Mon–Thu",                 featured: false },
 ];
 
+export interface Sponsor {
+  name: string;
+  descriptor: string;
+  url: string;
+  logo: string;
+  theme: "light" | "dark";
+  logoHeight: number; // per-sponsor rendered-height cap in px (logos differ in resolution)
+}
+
+// Club sponsors — source of truth for the /sponsors page.
+export const SPONSORS: Sponsor[] = [
+  { name: "ASEE Group",                        descriptor: "Mechanical & Electrical Engineering", url: "https://www.aseeltd.com/", logo: "/images/sponsors/asee.png",    theme: "light", logoHeight: 44 },
+  { name: "Corlatt Construction Services Ltd.", descriptor: "Construction Services",               url: "https://corlatt.com/",    logo: "/images/sponsors/corlatt.png", theme: "dark",  logoHeight: 72 },
+];
+
 export const LOCAL_RULES = [
   "If a ball lies through the green, the point on the course nearest to where the ball lies shall be determined which is not nearer the hole, avoids interference and is not in a hazard or on the putting green. The player shall lift the ball and drop it within one club length of the point thus determined.",
   "If the ball strikes the power lines, the player must disregard the stroke, abandon the ball and play another ball as near to the spot from which the original ball was played.",

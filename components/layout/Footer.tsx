@@ -22,6 +22,7 @@ const FOOTER_LINKS = {
   "The Club": [
     { label: "Our History",           href: "/about" },
     { label: "Photo Gallery",         href: "/gallery" },
+    { label: "Sponsors",              href: "/sponsors" },
     { label: "Contact Us",            href: "/contact" },
   ],
 };
