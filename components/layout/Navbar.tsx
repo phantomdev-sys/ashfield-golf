@@ -11,6 +11,8 @@ const NAV_LINKS = [
   { label: "About",        href: "/about" },
   { label: "Gallery",      href: "/gallery" },
   { label: "Sponsors",     href: "/sponsors" },
+  { label: "Development",  href: "/course-development" },
+  { label: "Juveniles",    href: "/juveniles" },
   { label: "Contact",      href: "/contact" },
 ];
 

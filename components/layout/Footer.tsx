@@ -8,6 +8,7 @@ const FOOTER_LINKS = {
     { label: "Course Overview",       href: "/course" },
     { label: "Interactive Scorecard", href: "/scorecard" },
     { label: "Local Rules",           href: "/course#rules" },
+    { label: "Course Development",     href: "/course-development" },
   ],
   "Visitors": [
     { label: "Green Fees",            href: "/visitors#greenfees" },
@@ -16,6 +17,7 @@ const FOOTER_LINKS = {
   ],
   "Members": [
     { label: "Membership Rates",      href: "/membership" },
+    { label: "Juveniles",             href: "/juveniles" },
     { label: "Competitions",          href: "/competitions" },
     { label: "Club News",             href: "/news" },
   ],
