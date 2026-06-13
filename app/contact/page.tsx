@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { COURSE_INFO } from "@/lib/data";
 import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
+import ContactForm from "@/components/forms/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -65,10 +66,8 @@ export default function ContactPage() {
               </div>
               <div style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: "3px solid #c9a84c", padding: "1.75rem", borderRadius: 2 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: "#1a3a2a", marginBottom: "0.75rem" }}>Send a Message</h3>
-                <p style={{ fontSize: 14, color: "#6b7c68", lineHeight: 1.6, marginBottom: "1rem" }}>For bookings, membership or society days — the quickest way to reach us is by phone.</p>
-                <a href={`mailto:${COURSE_INFO.emailGeneral}`} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#1a3a2a", color: "#f5f0e8", padding: "12px 22px", borderRadius: 2, fontSize: 14, textDecoration: "none" }}>
-                  <Mail size={15} /> Email the Club
-                </a>
+                <p style={{ fontSize: 14, color: "#6b7c68", lineHeight: 1.6, marginBottom: "1.25rem" }}>Fill in the form below and we&apos;ll get back to you shortly. For urgent enquiries, please call <a href="tel:02830868180" style={{ color: "#1a3a2a", fontWeight: 500, textDecoration: "none" }}>028 30 868180</a>.</p>
+                <ContactForm />
               </div>
             </div>
           </div>

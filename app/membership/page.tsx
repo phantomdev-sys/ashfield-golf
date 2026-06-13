@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { MEMBERSHIP_RATES } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -48,7 +49,10 @@ export default function MembershipPage() {
             <div>
               <div style={{ background: "#1a3a2a", padding: "2rem", borderRadius: 2, marginBottom: "1.5rem" }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: "#c9a84c", marginBottom: "1rem" }}>How to Join</h3>
-                <p style={{ fontSize: 14, color: "rgba(245,240,232,0.75)", lineHeight: 1.7, marginBottom: "1rem" }}>Contact the club by phone or email to request an application form.</p>
+                <Link href="/membership/apply" style={{ display: "block", textAlign: "center", background: "#c9a84c", color: "#1a3a2a", padding: "13px 18px", borderRadius: 2, fontWeight: 500, fontSize: 15, textDecoration: "none", marginBottom: "1.25rem" }}>
+                  Apply for Membership →
+                </Link>
+                <p style={{ fontSize: 14, color: "rgba(245,240,232,0.75)", lineHeight: 1.7, marginBottom: "1rem" }}>Prefer to apply another way? Contact the club by phone or email to request an application form.</p>
                 <a href="tel:02830868180" style={{ display: "block", color: "#c9a84c", fontSize: 16, textDecoration: "none", marginBottom: "0.5rem", fontFamily: "'Playfair Display', serif" }}>028 30 868180</a>
                 <a href="mailto:secretary@ashfieldgolfcourse.com" style={{ display: "block", color: "rgba(245,240,232,0.65)", fontSize: 13, textDecoration: "none" }}>secretary@ashfieldgolfcourse.com</a>
               </div>
