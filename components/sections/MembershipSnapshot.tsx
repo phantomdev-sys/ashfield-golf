@@ -1,12 +1,17 @@
 "use client";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { MEMBERSHIP_RATES } from "@/lib/data";
 
+const rate = (category: string) =>
+  MEMBERSHIP_RATES.find((r) => r.category === category)?.price ?? "";
+
+// Curated featured subset for the homepage teaser. Prices are pulled from
+// MEMBERSHIP_RATES (lib/data.ts) so they can never drift out of sync.
 const CARDS = [
-  { title: "Adult Male",   price: "£500", note: "Full GUI membership", featured: true },
-  { title: "Adult Female", price: "£300", note: "Full ILGU membership" },
-  { title: "Family",       price: "£550", note: "Husband & wife" },
-  { title: "Junior",       price: "From £100", note: "Under-16s" },
+  { title: "Men",       price: rate("Men"),    note: "Full GUI membership", featured: true },
+  { title: "Ladies",    price: rate("Ladies"), note: "Full ILGU membership" },
+  { title: "Juveniles", price: `From ${rate("Juveniles (U13)")}`, note: "Under-16s" },
 ];
 
 export default function MembershipSnapshot() {

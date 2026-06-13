@@ -1,13 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-
-const FEES = [
-  { type: "Weekdays",             price: "£15", sub: "Mon–Fri" },
-  { type: "Weekends & Bank Hols", price: "£20", sub: "Sat, Sun, BH" },
-  { type: "Students & Seniors",   price: "£10", sub: "ID required" },
-  { type: "Juniors (U16)",        price: "£10", sub: "All week" },
-];
+import { GREEN_FEES } from "@/lib/data";
 
 export default function VisitorSnapshot() {
   return (
@@ -23,11 +17,11 @@ export default function VisitorSnapshot() {
           </p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
-          {FEES.map((f, i) => (
-            <div key={i} style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: `3px solid ${i === 1 ? "#c9a84c" : "#4a8c62"}`, padding: "1.5rem 1rem", borderRadius: 2, textAlign: "center" }}>
+          {GREEN_FEES.map((f) => (
+            <div key={f.type} style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: `3px solid ${f.featured ? "#c9a84c" : "#4a8c62"}`, padding: "1.5rem 1rem", borderRadius: 2, textAlign: "center" }}>
               <p style={{ fontSize: 12, color: "#6b7c68", marginBottom: "0.5rem" }}>{f.type}</p>
               <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 5vw, 36px)", color: "#1a3a2a", lineHeight: 1 }}>{f.price}</div>
-              <p style={{ fontSize: 11, color: "#6b7c68", marginTop: "0.25rem" }}>{f.sub}</p>
+              <p style={{ fontSize: 11, color: "#6b7c68", marginTop: "0.25rem" }}>{f.note}</p>
             </div>
           ))}
         </div>

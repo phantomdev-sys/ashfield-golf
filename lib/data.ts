@@ -17,30 +17,21 @@ export const COURSE_INFO = {
 // Hole / tee data lives in lib/holes.ts (HOLES + TEES) — the verified
 // three-tee source. Import scorecard/course data from there, not here.
 
+// Confirmed 2026 membership rates.
 export const MEMBERSHIP_RATES = [
-  { category: "Adult Male",                        price: "£500", note: "or € rate" },
-  { category: "Adult Female",                      price: "£300", note: "or € rate" },
-  { category: "Husband and Wife",                  price: "£550", note: "or € rate" },
-  { category: "5 Day Member",                      price: "£250", note: "or € rate" },
-  { category: "Father and 1 child (U16)",          price: "£500", note: "or € rate" },
-  { category: "Father and 2 children (U16)",       price: "£550", note: "or € rate" },
-  { category: "Father and 3 children (U16)",       price: "£600", note: "or € rate" },
-  { category: "Mother and 1 child (U16)",          price: "£350", note: "or € rate" },
-  { category: "Mother and 2 children (U16)",       price: "£400", note: "or € rate" },
-  { category: "Mother and 3 children (U16)",       price: "£450", note: "or € rate" },
-  { category: "Family (Father, Mother, 3 x U16)", price: "£600", note: "or € rate" },
-  { category: "Senior Citizen",                    price: "£300", note: "or € rate" },
-  { category: "Age 21–23",                         price: "£300", note: "or € rate" },
-  { category: "Age 16–20",                         price: "£200", note: "or € rate" },
-  { category: "Under 16s",                         price: "£100", note: "or € rate" },
-  { category: "Distance Member (40+ miles)",       price: "£300", note: "or € rate" },
+  { category: "Men",             price: "£500" },
+  { category: "Ladies",          price: "£400" },
+  { category: "Seniors",         price: "£400" },
+  { category: "Students",        price: "£250" },
+  { category: "Juveniles (U13)", price: "£100" },
+  { category: "Juveniles",       price: "£150" },
 ];
 
+// Confirmed 2026 green fees. `featured` drives the gold card highlight on the
+// homepage snapshot and the visitors page so the two stay in sync.
 export const GREEN_FEES = [
-  { type: "Weekdays",                        price: "£15", note: "Mon–Fri" },
-  { type: "Weekends & Bank Holidays",        price: "£20", note: "Sat, Sun & BH" },
-  { type: "Students & Seniors",             price: "£10", note: "ID required" },
-  { type: "Juveniles (U16)",                price: "£10", note: "All week" },
+  { type: "Weekends",        price: "£25", note: "Fri–Sun & Bank Holidays", featured: true },
+  { type: "Monday–Thursday", price: "£20", note: "Mon–Thu",                 featured: false },
 ];
 
 export const LOCAL_RULES = [

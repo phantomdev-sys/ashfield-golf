@@ -26,7 +26,7 @@ export default function MembershipPage() {
             <div>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: "#1a3a2a", marginBottom: "1rem" }}>Membership Rates</h2>
               <p style={{ fontSize: 13, color: "#6b7c68", marginBottom: "1.5rem", padding: "0.75rem 1rem", background: "#fff", border: "1px solid rgba(201,168,76,0.3)", borderLeft: "3px solid #c9a84c", borderRadius: 2 }}>
-                Rates shown are indicative. Please contact the club directly for confirmed current pricing.
+                Rates shown are for the 2026 season.
               </p>
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>

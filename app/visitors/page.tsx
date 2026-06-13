@@ -25,8 +25,8 @@ export default function VisitorsPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: "#1a3a2a", marginBottom: "2rem" }}>Green Fees</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem", marginBottom: "3rem" }}>
-            {GREEN_FEES.map((f, i) => (
-              <div key={i} style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: "3px solid " + (i === 1 ? "#c9a84c" : "#4a8c62"), padding: "2rem", borderRadius: 2, textAlign: "center" }}>
+            {GREEN_FEES.map((f) => (
+              <div key={f.type} style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: "3px solid " + (f.featured ? "#c9a84c" : "#4a8c62"), padding: "2rem", borderRadius: 2, textAlign: "center" }}>
                 <p style={{ fontSize: 13, color: "#6b7c68", marginBottom: "0.75rem" }}>{f.type}</p>
                 <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 42, color: "#1a3a2a", lineHeight: 1 }}>{f.price}</div>
                 <p style={{ fontSize: 12, color: "#6b7c68", marginTop: "0.5rem" }}>{f.note}</p>
