@@ -1,19 +1,28 @@
-"use client";
+import fs from "fs";
+import path from "path";
+import type { Metadata } from "next";
+import GalleryGrid from "./GalleryGrid";
 
-const IMAGES = [
-  { src: "/images/aerial-main.jpeg", alt: "Aerial view of Ashfield Golf Course" },
-  { src: "/images/aerial-clean.png", alt: "Ashfield Golf Course from the air" },
-  { src: "/images/aerial-2.jpg", alt: "Tree-lined fairways from above" },
-  { src: "/images/lake-hazard.jpg", alt: "Water hazard on the course" },
-  { src: "/images/fairway-summer.jpg", alt: "Summer golf at Ashfield" },
-  { src: "/images/tee-golden.jpg", alt: "Golfer on the tee box" },
-  { src: "/images/entrance-stone.jpg", alt: "Ashfield Golf Course entrance" },
-  { src: "/images/juniors-walking.jpg", alt: "Junior golfers on the course" },
-  { src: "/images/clubhouse-group.jpg", alt: "Members outside the clubhouse" },
-  { src: "/images/green-flag.jpg", alt: "Approach to the green" },
-];
+export const metadata: Metadata = {
+  title: "Photo Gallery",
+  description:
+    "A gallery of photographs from Ashfield Golf Club — the course, the clubhouse and life around the club.",
+};
+
+// Server Component: read the gallery folder at render time and pass the
+// resulting web paths to the client grid.
+function getGalleryImages(): string[] {
+  const dir = path.join(process.cwd(), "public/images/gallery");
+  return fs
+    .readdirSync(dir)
+    .filter((file) => file.toLowerCase().endsWith(".jpg"))
+    .sort()
+    .map((file) => `/images/gallery/${file}`);
+}
 
 export default function GalleryPage() {
+  const images = getGalleryImages();
+
   return (
     <>
       <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
@@ -26,14 +35,7 @@ export default function GalleryPage() {
       </div>
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ columns: "3 260px", gap: "1rem" }}>
-            {IMAGES.map((img, i) => (
-              <div key={i} style={{ breakInside: "avoid", marginBottom: "1rem", overflow: "hidden", borderRadius: 2, background: "#2d5a3f" }}>
-                <img src={img.src} alt={img.alt} style={{ width: "100%", display: "block", transition: "transform 0.3s" }}
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).parentElement!.style.display = "none"; }} />
-              </div>
-            ))}
-          </div>
+          <GalleryGrid images={images} />
         </div>
       </div>
     </>
