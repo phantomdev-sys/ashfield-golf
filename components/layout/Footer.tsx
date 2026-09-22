@@ -95,9 +95,19 @@ export default function Footer() {
         </div>
       </div>
 
-      <div style={{ background: "#091710", padding: "0.875rem 1.25rem", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "0.5rem" }}>
+      <div style={{ background: "#091710", padding: "0.875rem 1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
         <span style={{ fontSize: 12, color: "rgba(245,240,232,0.25)" }}>© {new Date().getFullYear()} Ashfield Golf Club. All rights reserved.</span>
         <span style={{ fontSize: 12, color: "rgba(245,240,232,0.2)" }}>Prices are indicative — contact the club for current rates.</span>
+        <a href="https://phantomdevelopment.uk" target="_blank" rel="noopener noreferrer"
+          aria-label="Website by Phantom Development (opens in a new tab)"
+          style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "rgba(245,240,232,0.25)", textDecoration: "none" }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#c9a84c")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,240,232,0.25)")}>
+          <img src="/images/phantom-development-icon.webp" alt="" width={16} height={16}
+            style={{ width: 16, height: 16, objectFit: "contain" }}
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+          Website by Phantom Development
+        </a>
       </div>
     </footer>
   );
