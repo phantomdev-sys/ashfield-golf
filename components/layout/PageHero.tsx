@@ -11,17 +11,25 @@ interface PageHeroProps {
   children?: ReactNode;
   /** Heroes sit behind the title, so they are decorative by default. */
   alt?: string;
+  /** Per-image scrim gradient. Defaults to a conservative ramp; each page
+      passes the lightest ramp measured for its own photo. */
+  scrim?: string;
 }
 
-// Scrim verified for WCAG AA against a worst-case white-sky photo:
-// photo at 0.55 over #1a3a2a, then this gradient. Across the text column
-// (left ~47%) the scrim never drops below 0.90, giving cream title 9.33:1,
-// gold eyebrow 4.63:1 and the 78% intro 5.29:1.
-export const HERO_SCRIM =
-  "linear-gradient(100deg, rgba(26,58,42,0.96) 0%, rgba(26,58,42,0.90) 55%, rgba(26,58,42,0.28) 100%)";
-export const HERO_PHOTO_OPACITY = 0.55;
+// The photo renders at full opacity; only this scrim sits on top of it.
+// Each page passes a ramp solved against its own pixels: the lightest
+// 0%->47% gradient that still clears WCAG AA for every column in the text
+// zone, measured against that column's 95th-percentile brightest pixel --
+// eyebrow (cream @85%) 4.5:1, intro (cream @78%) 4.5:1, cream title 4.5:1,
+// and the gold title word 3:1 as large text. The eyebrow is cream rather
+// than gold precisely so the ramp can stay light; gold's luminance would
+// force the left side almost opaque. The right edge stays at 0.15 so the
+// photograph reads rather than washing into flat green.
+export const HERO_EYEBROW_COLOR = "rgba(245,240,232,0.85)";
+export const HERO_SCRIM_DEFAULT =
+  "linear-gradient(100deg, rgba(26,58,42,0.76) 0%, rgba(26,58,42,0.80) 47%, rgba(26,58,42,0.15) 100%)";
 
-export default function PageHero({ image, eyebrow, title, intro, children, alt = "" }: PageHeroProps) {
+export default function PageHero({ image, eyebrow, title, intro, children, alt = "", scrim = HERO_SCRIM_DEFAULT }: PageHeroProps) {
   return (
     <section
       className="agc-page-hero"
@@ -45,14 +53,13 @@ export default function PageHero({ image, eyebrow, title, intro, children, alt =
           position: "absolute", inset: 0,
           width: "100%", height: "100%",
           objectFit: "cover", objectPosition: "center",
-          opacity: HERO_PHOTO_OPACITY,
         }}
       />
-      <div style={{ position: "absolute", inset: 0, background: HERO_SCRIM }} />
+      <div style={{ position: "absolute", inset: 0, background: scrim }} />
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", padding: "2rem", width: "100%" }}>
         <div style={{ maxWidth: 600 }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>
+          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: HERO_EYEBROW_COLOR, fontWeight: 500 }}>
             {eyebrow}
           </span>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>

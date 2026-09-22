@@ -37,6 +37,7 @@ export default function GalleryPage() {
     <>
       <PageHero
         image="/images/course/evening-fairway-trees.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.43) 0%, rgba(26,58,42,0.75) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Photography"
         title={<>Photo <em style={{ color: "#c9a84c" }}>Gallery</em></>}
         intro={<>The course through the seasons — fairways, greens and evening light at Ashfield.</>}

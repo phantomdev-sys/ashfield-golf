@@ -19,6 +19,7 @@ export default function CourseDevelopmentPage() {
     <>
       <PageHero
         image="/images/course/sunset-through-trees.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.69) 0%, rgba(26,58,42,0.74) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="The Course"
         title={<>Course <em style={{ color: "#c9a84c" }}>Development</em></>}
         intro={<>We are continually investing in the future of Ashfield Golf Club. Updates on course development projects will appear here.</>}

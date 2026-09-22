@@ -13,6 +13,7 @@ export default function MembershipPage() {
     <>
       <PageHero
         image="/images/course/green-evening-light.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.42) 0%, rgba(26,58,42,0.98) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Join Us"
         title={<>Membership at <em style={{ color: "#c9a84c" }}>Ashfield</em></>}
         intro={<>New members are welcome. All memberships include full GUI handicap eligibility, competition access, and a community built on a genuine love of the game.</>}

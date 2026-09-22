@@ -13,6 +13,7 @@ export default function VisitorsPage() {
     <>
       <PageHero
         image="/images/course/oak-framed-fairway-evening.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.42) 0%, rgba(26,58,42,0.98) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Welcome"
         title={<>Visitors to <em style={{ color: "#c9a84c" }}>Ashfield</em></>}
         intro={<>You don&apos;t need to be a member to play. Walk-ins welcome, and our society packages offer outstanding value.</>}

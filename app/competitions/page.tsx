@@ -11,6 +11,7 @@ export default function CompetitionsPage() {
     <>
       <PageHero
         image="/images/course/fairway-rise-conifers.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.66) 0%, rgba(26,58,42,0.61) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Members"
         title={<>Competitions & <em style={{ color: "#c9a84c" }}>Events</em></>}
       />

@@ -13,6 +13,7 @@ export default function CoursePage() {
     <>
       <PageHero
         image="/images/course/fairway-avenue-clubhouse.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.64) 0%, rgba(26,58,42,0.70) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="5,620 Yards · Par 69"
         title={<>The <em style={{ color: "#c9a84c" }}>Course</em></>}
         intro={<>A classic parkland layout in rolling South Armagh countryside. Tree-lined fairways, water hazards, and 18 distinctly named holes.</>}

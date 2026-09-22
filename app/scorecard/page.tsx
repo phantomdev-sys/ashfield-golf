@@ -13,6 +13,7 @@ export default function ScorecardPage() {
     <>
       <PageHero
         image="/images/course/elevated-tee-view.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.73) 0%, rgba(26,58,42,0.79) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Ashfield Golf Club"
         title={<>Interactive <em style={{ color: "#c9a84c" }}>Scorecard</em></>}
         intro={<>Select your tee, enter your handicap, and track your round hole by hole. Stableford points are calculated automatically.</>}

@@ -12,12 +12,12 @@ const STATS = [
 export default function HeroSection() {
   return (
     <section style={{ position: "relative", minHeight: "100svh", background: "#1a3a2a", overflow: "hidden", display: "flex", alignItems: "center", paddingTop: 64 }}>
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/images/aerial-main.jpeg')", backgroundSize: "cover", backgroundPosition: "center 45%", opacity: 0.55 }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(26,58,42,0.96) 0%, rgba(26,58,42,0.90) 55%, rgba(26,58,42,0.28) 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/images/aerial-main.jpeg')", backgroundSize: "cover", backgroundPosition: "center 45%" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(26,58,42,0.76) 0%, rgba(26,58,42,0.73) 47%, rgba(26,58,42,0.15) 100%)" }} />
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", padding: "2rem 1.25rem 8rem", width: "100%" }}>
         <div style={{ maxWidth: 600 }}>
-          <p style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", marginBottom: "1rem", fontWeight: 500 }}>
+          <p style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(245,240,232,0.85)", marginBottom: "1rem", fontWeight: 500 }}>
             South Armagh · Northern Ireland
           </p>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(34px, 6vw, 58px)", lineHeight: 1.1, color: "#f5f0e8", marginBottom: "1.25rem" }}>

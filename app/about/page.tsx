@@ -11,6 +11,7 @@ export default function AboutPage() {
     <>
       <PageHero
         image="/images/course/sunset-over-the-course.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.72) 0%, rgba(26,58,42,0.77) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Est. 1990"
         title={<>Our <em style={{ color: "#c9a84c" }}>History</em></>}
       />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { COURSE_INFO } from "@/lib/data";
 import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 import ContactForm from "@/components/forms/ContactForm";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -18,14 +19,12 @@ const contactItems = [
 export default function ContactPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 1.25rem 3rem", marginTop: 64 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Get in Touch</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(30px, 5vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Contact <em style={{ color: "#c9a84c" }}>Ashfield</em>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/fairway-rise-conifers.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.66) 0%, rgba(26,58,42,0.61) 47%, rgba(26,58,42,0.15) 100%)"
+        eyebrow="Get in Touch"
+        title={<>Contact <em style={{ color: "#c9a84c" }}>Ashfield</em></>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 1.25rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>

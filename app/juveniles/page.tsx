@@ -29,6 +29,7 @@ export default function JuvenilesPage() {
     <>
       <PageHero
         image="/images/course/green-and-red-flag.webp"
+        scrim="linear-gradient(100deg, rgba(26,58,42,0.35) 0%, rgba(26,58,42,0.79) 47%, rgba(26,58,42,0.15) 100%)"
         eyebrow="Junior Golf"
         title={<>Juvenile <em style={{ color: "#c9a84c" }}>Golf</em></>}
         intro={<>Introducing the next generation to the game at Ashfield Golf Club.</>}
