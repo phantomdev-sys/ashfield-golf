@@ -19,16 +19,35 @@ export const COURSE_INFO = {
 
 // Primary navigation — shared by the desktop bar and the mobile panel in
 // components/layout/Navbar.tsx.
-export const NAV_LINKS = [
+export interface NavChild {
+  label: string;
+  href: string;
+}
+
+export interface NavItem {
+  label: string;
+  /** Omitted on a group header ("The Club"), which is a menu button, not a page. */
+  href?: string;
+  children?: NavChild[];
+}
+
+// One level of nesting only. Navbar renders a child-bearing item as a desktop
+// dropdown and as an indented group in the mobile drawer.
+export const NAV_LINKS: NavItem[] = [
   { label: "The Course",   href: "/course" },
   { label: "Visitors",     href: "/visitors" },
   { label: "Membership",   href: "/membership" },
   { label: "Competitions", href: "/competitions" },
-  { label: "About",        href: "/about" },
-  { label: "Gallery",      href: "/gallery" },
-  { label: "Sponsors",     href: "/sponsors" },
-  { label: "Development",  href: "/course-development" },
-  { label: "Juveniles",    href: "/juveniles" },
+  {
+    label: "The Club",
+    children: [
+      { label: "About",              href: "/about" },
+      { label: "Gallery",            href: "/gallery" },
+      { label: "Sponsors",           href: "/sponsors" },
+      { label: "Course Development", href: "/course-development" },
+      { label: "Juveniles",          href: "/juveniles" },
+    ],
+  },
   { label: "Contact",      href: "/contact" },
 ];
 
