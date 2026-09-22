@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, ExternalLink, ChevronDown } from "lucide-react";
@@ -13,11 +14,16 @@ const CLUB_MENU_ID = "agc-club-menu";
 const DRAWER_ID = "agc-mobile-drawer";
 const HOVER_CLOSE_MS = 150;
 
+// Mount check without setState-in-effect: returns false during SSR and on the
+// hydration pass, true thereafter, so createPortal never runs on the server.
+const emptySubscribe = () => () => {};
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [clubOpen, setClubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   const clubWrapRef = useRef<HTMLDivElement | null>(null);
   const clubBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -147,6 +153,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <header style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
       backgroundColor: scrolled ? "rgba(26,58,42,0.98)" : "#1a3a2a",
@@ -267,91 +274,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <div className="agc-overlay" data-open={open} aria-hidden="true" onClick={() => setOpen(false)}
-        style={{
-          position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 110,
-          opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden",
-        }} />
-
-      <div
-        ref={drawerRef}
-        id={DRAWER_ID}
-        className="agc-drawer"
-        data-open={open}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site menu"
-        onKeyDown={trapTab}
-        style={{
-          position: "fixed", top: 0, right: 0, bottom: 0, width: "min(400px, 100vw)",
-          background: "#1a3a2a", zIndex: 120,
-          borderLeft: "1px solid rgba(201,168,76,0.25)",
-          boxShadow: "-14px 0 34px rgba(0,0,0,0.4)",
-          display: "flex", flexDirection: "column",
-          transform: open ? "translateX(0)" : "translateX(100%)",
-          visibility: open ? "visible" : "hidden",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 1.25rem", height: 64, borderBottom: "1px solid rgba(201,168,76,0.2)", flexShrink: 0 }}>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, color: "#c9a84c" }}>Menu</span>
-          <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"
-            style={{ background: "none", border: "none", color: "#c9a84c", cursor: "pointer", padding: 4, display: "flex" }}>
-            <X size={24} aria-hidden="true" />
-          </button>
-        </div>
-
-        <div style={{ flex: 1, overflowY: "auto", padding: "0.5rem 1.25rem 1rem" }}>
-          {NAV_LINKS.map((item) => {
-            if (item.children) {
-              return (
-                <div key={item.label} style={{ padding: "0.85rem 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                  <span style={{ display: "block", fontSize: 11, letterSpacing: "2px", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.35rem" }}>
-                    {item.label}
-                  </span>
-                  {item.children.map((child) => {
-                    const childActive = isActive(child.href);
-                    return (
-                      <Link key={child.href} href={child.href} onClick={() => setOpen(false)}
-                        aria-current={childActive ? "page" : undefined}
-                        style={{
-                          display: "block", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.5rem",
-                          color: childActive ? GOLD : DIM_DRAWER, textDecoration: "none", fontSize: 15,
-                          fontFamily: "'Playfair Display', serif",
-                        }}>
-                        {child.label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              );
-            }
-            const active = isActive(item.href!);
-            return (
-              <Link key={item.href} href={item.href!} onClick={() => setOpen(false)}
-                aria-current={active ? "page" : undefined}
-                style={{
-                  display: "block", color: active ? GOLD : DIM_DRAWER, textDecoration: "none",
-                  padding: "0.85rem 0", fontSize: 16, borderBottom: "1px solid rgba(255,255,255,0.06)",
-                  fontFamily: "'Playfair Display', serif",
-                }}>
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-
-        <div style={{ padding: "1rem 1.25rem 1.5rem", borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
-          <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer" aria-label={BOOKING_LABEL} onClick={() => setOpen(false)}
-            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 20px", borderRadius: 2, fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
-            Book a Tee Time <ExternalLink size={16} aria-hidden="true" />
-          </a>
-          <a href={`tel:${COURSE_INFO.phone.replace(/\s/g, "")}`} onClick={() => setOpen(false)}
-            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(201,168,76,0.5)", color: "#c9a84c", padding: "12px 20px", borderRadius: 2, marginTop: "0.6rem", fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
-            <Phone size={16} aria-hidden="true" /> Call the club
-          </a>
-        </div>
-      </div>
-
       <style>{`
         /* Grouping five links under "The Club" cuts the desktop bar from
            ~1264px to ~945px of required width, so it now fits from 1024px.
@@ -372,5 +294,101 @@ export default function Navbar() {
         }
       `}</style>
     </header>
+
+    {/* The header gets backdrop-filter when scrolled, which makes it the
+        containing block for any position:fixed descendant -- that clipped the
+        drawer and overlay to the 64px bar. Portalling them to <body> keeps
+        them viewport-sized while the header keeps its blur. */}
+    {mounted &&
+      createPortal(
+        <>
+          <div className="agc-overlay" data-open={open} aria-hidden="true" onClick={() => setOpen(false)}
+            style={{
+              position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 110,
+              opacity: open ? 1 : 0, visibility: open ? "visible" : "hidden",
+            }} />
+
+          <div
+            ref={drawerRef}
+            id={DRAWER_ID}
+            className="agc-drawer"
+            data-open={open}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            onKeyDown={trapTab}
+            style={{
+              position: "fixed", top: 0, right: 0, bottom: 0, width: "min(400px, 100vw)",
+              background: "#1a3a2a", zIndex: 120,
+              borderLeft: "1px solid rgba(201,168,76,0.25)",
+              boxShadow: "-14px 0 34px rgba(0,0,0,0.4)",
+              display: "flex", flexDirection: "column",
+              transform: open ? "translateX(0)" : "translateX(100%)",
+              visibility: open ? "visible" : "hidden",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 1.25rem", height: 64, borderBottom: "1px solid rgba(201,168,76,0.2)", flexShrink: 0 }}>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 17, color: "#c9a84c" }}>Menu</span>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close menu"
+                style={{ background: "none", border: "none", color: "#c9a84c", cursor: "pointer", padding: 4, display: "flex" }}>
+                <X size={24} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div style={{ flex: 1, overflowY: "auto", padding: "0.5rem 1.25rem 1rem" }}>
+              {NAV_LINKS.map((item) => {
+                if (item.children) {
+                  return (
+                    <div key={item.label} style={{ padding: "0.85rem 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                      <span style={{ display: "block", fontSize: 11, letterSpacing: "2px", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.35rem" }}>
+                        {item.label}
+                      </span>
+                      {item.children.map((child) => {
+                        const childActive = isActive(child.href);
+                        return (
+                          <Link key={child.href} href={child.href} onClick={() => setOpen(false)}
+                            aria-current={childActive ? "page" : undefined}
+                            style={{
+                              display: "block", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.5rem",
+                              color: childActive ? GOLD : DIM_DRAWER, textDecoration: "none", fontSize: 15,
+                              fontFamily: "'Playfair Display', serif",
+                            }}>
+                            {child.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  );
+                }
+                const active = isActive(item.href!);
+                return (
+                  <Link key={item.href} href={item.href!} onClick={() => setOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    style={{
+                      display: "block", color: active ? GOLD : DIM_DRAWER, textDecoration: "none",
+                      padding: "0.85rem 0", fontSize: 16, borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      fontFamily: "'Playfair Display', serif",
+                    }}>
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div style={{ padding: "1rem 1.25rem 1.5rem", borderTop: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+              <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer" aria-label={BOOKING_LABEL} onClick={() => setOpen(false)}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 20px", borderRadius: 2, fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
+                Book a Tee Time <ExternalLink size={16} aria-hidden="true" />
+              </a>
+              <a href={`tel:${COURSE_INFO.phone.replace(/\s/g, "")}`} onClick={() => setOpen(false)}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(201,168,76,0.5)", color: "#c9a84c", padding: "12px 20px", borderRadius: 2, marginTop: "0.6rem", fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
+                <Phone size={16} aria-hidden="true" /> Call the club
+              </a>
+            </div>
+          </div>
+        </>,
+        document.body,
+      )}
+    </>
   );
 }
