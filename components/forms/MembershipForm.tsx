@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
 import SubmitButton from "./SubmitButton";
+import SendFailureMessage from "./SendFailureMessage";
 import { MEMBERSHIP_RATES } from "@/lib/data";
+import { HONEYPOT_FIELD, ELAPSED_FIELD } from "@/lib/antiBot";
 import {
   fieldWrap, labelStyle, inputStyle, textareaStyle, errorTextStyle,
-  successBanner, errorBanner,
+  successBanner, errorBanner, honeypotWrap,
 } from "./formStyles";
 
 // Category options derived from MEMBERSHIP_RATES so they can't drift.
@@ -22,7 +24,12 @@ export default function MembershipForm() {
   const [form, setForm] = useState({ ...EMPTY });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
-  const [serverError, setServerError] = useState("");
+  const [serverError, setServerError] = useState<React.ReactNode>(null);
+  // Bot traps. `honeypot` must stay empty; `renderedAt` is captured once at
+  // mount and turned into an elapsed duration at submit time, so the server
+  // can reject submissions that arrive impossibly fast.
+  const [honeypot, setHoneypot] = useState("");
+  const [renderedAt] = useState(() => Date.now());
 
   const update =
     (key: keyof typeof EMPTY) =>
@@ -49,12 +56,17 @@ export default function MembershipForm() {
     if (Object.keys(e).length > 0) return;
 
     setStatus("submitting");
-    setServerError("");
+    setServerError(null);
     try {
       const res = await fetch("/api/membership", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          [HONEYPOT_FIELD]: honeypot,
+          // Both readings come from this device's clock, so skew cancels out.
+          [ELAPSED_FIELD]: Date.now() - renderedAt,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success) {
@@ -63,11 +75,13 @@ export default function MembershipForm() {
         setErrors({});
       } else {
         setStatus("error");
-        setServerError(data.error || "Something went wrong. Please try again or call 028 30 868180.");
+        // Validation failures (400) keep their specific server wording; any
+        // send failure gets the actionable phone/email fallback.
+        setServerError(res.status < 500 && data.error ? data.error : <SendFailureMessage />);
       }
     } catch {
       setStatus("error");
-      setServerError("Network error — please check your connection and try again.");
+      setServerError(<SendFailureMessage />);
     }
   }
 
@@ -83,6 +97,22 @@ export default function MembershipForm() {
       {status === "error" && serverError && (
         <div style={errorBanner} role="alert">{serverError}</div>
       )}
+
+      {/* Honeypot — invisible and unreachable for real users. Never remove the
+          aria-hidden/tabIndex pair: they are what keep it off keyboard and
+          screen-reader paths. */}
+      <div style={honeypotWrap} aria-hidden="true">
+        <label htmlFor="mf-company-website">Company website</label>
+        <input
+          id="mf-company-website"
+          type="text"
+          name={HONEYPOT_FIELD}
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       <div style={fieldWrap}>
         <label style={labelStyle} htmlFor="mf-name">Full Name {star}</label>

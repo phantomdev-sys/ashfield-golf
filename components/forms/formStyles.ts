@@ -43,3 +43,13 @@ export const errorBanner: CSSProperties = {
   border: "1px solid #b4452f", color: "#8f3322", fontSize: 14, lineHeight: 1.55,
   marginBottom: "1.25rem",
 };
+
+// Honeypot wrapper: off-screen AND clipped, so it never paints and never
+// affects layout. Pair it with aria-hidden + tabIndex={-1} on the field so it
+// is unreachable by keyboard and screen readers, while remaining a normal
+// visible input to a scripted bot reading the DOM.
+export const honeypotWrap: CSSProperties = {
+  position: "absolute", left: "-9999px", top: "auto",
+  width: 1, height: 1, padding: 0, margin: -1,
+  overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap", border: 0,
+};

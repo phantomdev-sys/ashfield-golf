@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { GREEN_FEES } from "@/lib/data";
-import { Phone } from "lucide-react";
+import { COURSE_INFO, GREEN_FEES } from "@/lib/data";
+import { ExternalLink, Phone } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Visitors",
@@ -17,13 +17,25 @@ export default function VisitorsPage() {
             Visitors to <em style={{ color: "#c9a84c" }}>Ashfield</em>
           </h1>
           <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            You don't need to be a member to play. Walk-ins welcome, and our society packages offer outstanding value.
+            You don&apos;t need to be a member to play. Walk-ins welcome, and our society packages offer outstanding value.
           </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
+            <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer"
+              aria-label="Book a Tee Time (opens in a new tab)"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 24px", borderRadius: 2, fontWeight: 500, fontSize: 14, textDecoration: "none" }}>
+              Book a Tee Time <ExternalLink size={14} aria-hidden="true" />
+            </a>
+            <a href={`tel:${COURSE_INFO.phone.replace(/\s/g, "")}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, border: "1px solid rgba(201,168,76,0.5)", color: "#c9a84c", padding: "12px 24px", borderRadius: 2, fontWeight: 500, fontSize: 14, textDecoration: "none" }}>
+              <Phone size={14} aria-hidden="true" /> Call to Book
+            </a>
+          </div>
         </div>
       </div>
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: "#1a3a2a", marginBottom: "2rem" }}>Green Fees</h2>
+          {/* scrollMarginTop clears the fixed 64px navbar when linked to via #greenfees */}
+          <h2 id="greenfees" style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: "#1a3a2a", marginBottom: "2rem", scrollMarginTop: 88 }}>Green Fees</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem", marginBottom: "3rem" }}>
             {GREEN_FEES.map((f) => (
               <div key={f.type} style={{ background: "#fff", border: "1px solid rgba(26,58,42,0.1)", borderTop: "3px solid " + (f.featured ? "#c9a84c" : "#4a8c62"), padding: "2rem", borderRadius: 2, textAlign: "center" }}>

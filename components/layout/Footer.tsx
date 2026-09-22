@@ -3,7 +3,13 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 import { COURSE_INFO } from "@/lib/data";
 
-const FOOTER_LINKS = {
+interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean; // renders as a new-tab <a> rather than a next/link
+}
+
+const FOOTER_LINKS: Record<string, FooterLink[]> = {
   "The Course": [
     { label: "Course Overview",       href: "/course" },
     { label: "Interactive Scorecard", href: "/scorecard" },
@@ -11,6 +17,7 @@ const FOOTER_LINKS = {
     { label: "Course Development",     href: "/course-development" },
   ],
   "Visitors": [
+    { label: "Book a Tee Time",       href: COURSE_INFO.bookingUrl, external: true },
     { label: "Green Fees",            href: "/visitors#greenfees" },
     { label: "Society Packages",      href: "/visitors#societies" },
     { label: "Contact & Booking",     href: "/contact" },
@@ -62,13 +69,24 @@ export default function Footer() {
             {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
               <div key={heading}>
                 <h4 style={{ fontSize: 11, letterSpacing: "2px", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem", fontWeight: 500 }}>{heading}</h4>
-                {links.map((l) => (
-                  <Link key={l.href} href={l.href} style={{ display: "block", color: "rgba(245,240,232,0.5)", fontSize: 13, textDecoration: "none", marginBottom: "0.4rem" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#c9a84c")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,240,232,0.5)")}>
-                    {l.label}
-                  </Link>
-                ))}
+                {links.map((l) => {
+                  const linkStyle = { display: "block", color: "rgba(245,240,232,0.5)", fontSize: 13, textDecoration: "none", marginBottom: "0.4rem" } as const;
+                  const hover = {
+                    onMouseEnter: (e: React.MouseEvent<HTMLElement>) => ((e.currentTarget as HTMLElement).style.color = "#c9a84c"),
+                    onMouseLeave: (e: React.MouseEvent<HTMLElement>) => ((e.currentTarget as HTMLElement).style.color = "rgba(245,240,232,0.5)"),
+                  };
+                  return l.external ? (
+                    <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+                      aria-label={`${l.label} (opens in a new tab)`}
+                      style={{ ...linkStyle, display: "flex", alignItems: "center", gap: 5 }} {...hover}>
+                      {l.label} <ExternalLink size={11} aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <Link key={l.href} href={l.href} style={linkStyle} {...hover}>
+                      {l.label}
+                    </Link>
+                  );
+                })}
               </div>
             ))}
           </div>

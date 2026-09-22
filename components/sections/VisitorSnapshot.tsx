@@ -10,7 +10,7 @@ export default function VisitorSnapshot() {
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#4a8c62", fontWeight: 500 }}>Visitor Green Fees</span>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(24px, 4vw, 36px)", color: "#1a3a2a", margin: "0.5rem auto 1rem", lineHeight: 1.2 }}>
-            You Don't Need to Be a Member to <em style={{ color: "#c9a84c" }}>Play</em>
+            You Don&apos;t Need to Be a Member to <em style={{ color: "#c9a84c" }}>Play</em>
           </h2>
           <p style={{ fontSize: "clamp(13px, 2vw, 15px)", color: "#3d4f3a", lineHeight: 1.7, maxWidth: 500, margin: "0 auto", fontWeight: 300 }}>
             Walk-in visitors are always welcome. A great round in South Armagh awaits.

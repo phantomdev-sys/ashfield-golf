@@ -11,8 +11,26 @@ export const COURSE_INFO = {
   email: "secretary@ashfieldgolfcourse.com",
   emailGeneral: "ashfieldgolfclub@gmail.com",
   facebook: "https://www.facebook.com/ashfieldgolfcourse",
+  // BRS Golf tee-sheet. Single source of truth — nav, footer and visitors page
+  // all read this, so the booking URL is only ever changed here.
+  bookingUrl: "https://visitors.brsgolf.com/ashfield?clear_club_cache=1#/course/1",
   coordinates: { lat: 54.17, lng: -6.38 },
 };
+
+// Primary navigation — shared by the desktop bar and the mobile panel in
+// components/layout/Navbar.tsx.
+export const NAV_LINKS = [
+  { label: "The Course",   href: "/course" },
+  { label: "Visitors",     href: "/visitors" },
+  { label: "Membership",   href: "/membership" },
+  { label: "Competitions", href: "/competitions" },
+  { label: "About",        href: "/about" },
+  { label: "Gallery",      href: "/gallery" },
+  { label: "Sponsors",     href: "/sponsors" },
+  { label: "Development",  href: "/course-development" },
+  { label: "Juveniles",    href: "/juveniles" },
+  { label: "Contact",      href: "/contact" },
+];
 
 // Hole / tee data lives in lib/holes.ts (HOLES + TEES) — the verified
 // three-tee source. Import scorecard/course data from there, not here.

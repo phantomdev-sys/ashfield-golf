@@ -1,11 +1,11 @@
 import { Resend } from "resend";
 import { esc, emailShell, fieldRow } from "@/lib/email";
 import { MEMBERSHIP_RATES } from "@/lib/data";
+import { detectBot, logBlocked } from "@/lib/antiBot";
 
 export const runtime = "nodejs";
 
 const CLUB_EMAIL = "ashfieldgolfclub@gmail.com";
-const FROM = "Ashfield Golf Club Website <onboarding@resend.dev>";
 const VALID_CATEGORIES = MEMBERSHIP_RATES.map((r) => `${r.category} (${r.price})`);
 
 // "YYYY-MM-DD" -> "DD/MM/YYYY" for UK-readable email output.
@@ -20,6 +20,16 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return Response.json({ error: "Invalid request." }, { status: 400 });
+  }
+
+  // Bot checks run before validation so a blocked submission never does work
+  // and never reveals which field it failed on. `ok` satisfies the silent-drop
+  // contract; `success` keeps the response shape the form already expects, so
+  // a bot (or a false positive) sees an ordinary success state.
+  const botReason = detectBot(body);
+  if (botReason) {
+    logBlocked("/api/membership", botReason);
+    return Response.json({ ok: true, success: true });
   }
 
   const fullName = String(body.fullName ?? "").trim();
@@ -48,6 +58,14 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("RESEND_API_KEY is not set");
+    return Response.json({ error: "Email service is not configured. Please call the club on 028 30 868180." }, { status: 500 });
+  }
+  // Sender must be an address on a Resend-verified domain. Never fall back to
+  // Resend's shared sandbox sender: it only delivers to the account owner,
+  // which is what made every live submission fail with a 403.
+  const from = process.env.RESEND_FROM;
+  if (!from) {
+    console.error("RESEND_FROM is not set — set it to a verified sender, e.g. \"Ashfield Golf Club <website@ashfieldgolfcourse.com>\"");
     return Response.json({ error: "Email service is not configured. Please call the club on 028 30 868180." }, { status: 500 });
   }
   const resend = new Resend(apiKey);
@@ -92,16 +110,29 @@ export async function POST(request: Request) {
   });
 
   try {
-    const [clubRes, replyRes] = await Promise.all([
-      resend.emails.send({ from: FROM, to: CLUB_EMAIL, replyTo: email, subject: `New Membership Application: ${subjectName} — ${subjectCategory}`, html: clubHtml }),
-      resend.emails.send({ from: FROM, to: email, replyTo: CLUB_EMAIL, subject: "Membership Application Received — Ashfield Golf Club", html: replyHtml }),
-    ]);
-
+    // Club notification first, and only on success do we send the auto-reply.
+    // Sending both in parallel let a spam submission trigger an outbound email
+    // to an arbitrary address even when the club copy never arrived.
+    const clubRes = await resend.emails.send({
+      from, to: CLUB_EMAIL, replyTo: email,
+      subject: `New Membership Application: ${subjectName} — ${subjectCategory}`, html: clubHtml,
+    });
     if (clubRes.error) {
       console.error("Resend club email error:", clubRes.error);
       return Response.json({ error: "We couldn't submit your application. Please call the club on 028 30 868180." }, { status: 502 });
     }
-    if (replyRes.error) console.error("Resend auto-reply error (non-fatal):", replyRes.error);
+
+    // The club has the application — the auto-reply is best-effort from here,
+    // so a failure (returned or thrown) is logged but never fails the request.
+    try {
+      const replyRes = await resend.emails.send({
+        from, to: email, replyTo: CLUB_EMAIL,
+        subject: "Membership Application Received — Ashfield Golf Club", html: replyHtml,
+      });
+      if (replyRes.error) console.error("Resend auto-reply error (non-fatal):", replyRes.error);
+    } catch (err) {
+      console.error("Resend auto-reply threw (non-fatal):", err);
+    }
 
     return Response.json({ success: true });
   } catch (err) {

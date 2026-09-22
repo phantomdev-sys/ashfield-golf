@@ -12,7 +12,7 @@ export default function CtaSection() {
           From the First Tee to the <em style={{ color: "#c9a84c" }}>19th Hole</em>
         </h2>
         <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, marginBottom: "2.5rem", fontWeight: 300 }}>
-          We'll have the kettle on. Contact Ashfield Golf Club to book your round, enquire about membership, or plan your society day.
+          We&apos;ll have the kettle on. Contact Ashfield Golf Club to book your round, enquire about membership, or plan your society day.
         </p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "14px 28px", borderRadius: 2, fontWeight: 500, fontSize: 15, textDecoration: "none" }}>

@@ -1,20 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ExternalLink } from "lucide-react";
+import { COURSE_INFO, NAV_LINKS } from "@/lib/data";
 
-const NAV_LINKS = [
-  { label: "The Course",   href: "/course" },
-  { label: "Visitors",     href: "/visitors" },
-  { label: "Membership",   href: "/membership" },
-  { label: "Competitions", href: "/competitions" },
-  { label: "About",        href: "/about" },
-  { label: "Gallery",      href: "/gallery" },
-  { label: "Sponsors",     href: "/sponsors" },
-  { label: "Development",  href: "/course-development" },
-  { label: "Juveniles",    href: "/juveniles" },
-  { label: "Contact",      href: "/contact" },
-];
+const BOOKING_LABEL = "Book a Tee Time (opens in a new tab)";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -54,8 +44,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <a href="tel:02830868180" style={{ display: "flex", alignItems: "center", gap: 6, background: "#c9a84c", color: "#1a3a2a", padding: "8px 14px", borderRadius: 2, fontSize: 12, fontWeight: 500, textDecoration: "none" }}>
-            <Phone size={13} /> Book a Round
+          <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer" aria-label={BOOKING_LABEL}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "#c9a84c", color: "#1a3a2a", padding: "8px 14px", borderRadius: 2, fontSize: 12, fontWeight: 500, textDecoration: "none", whiteSpace: "nowrap" }}>
+            Book a Tee Time <ExternalLink size={13} aria-hidden="true" />
           </a>
         </div>
 
@@ -72,14 +63,24 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <a href="tel:02830868180" style={{ display: "flex", alignItems: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 20px", borderRadius: 2, marginTop: "1rem", fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
-            <Phone size={16} /> 028 30 868180
+          <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer" aria-label={BOOKING_LABEL} onClick={() => setOpen(false)}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, background: "#c9a84c", color: "#1a3a2a", padding: "13px 20px", borderRadius: 2, marginTop: "1rem", fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
+            Book a Tee Time <ExternalLink size={16} aria-hidden="true" />
+          </a>
+          <a href={`tel:${COURSE_INFO.phone.replace(/\s/g, "")}`} onClick={() => setOpen(false)}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, border: "1px solid rgba(201,168,76,0.5)", color: "#c9a84c", padding: "12px 20px", borderRadius: 2, marginTop: "0.6rem", fontWeight: 500, textDecoration: "none", fontSize: 15 }}>
+            <Phone size={16} aria-hidden="true" /> Call the club
           </a>
         </div>
       )}
 
       <style>{`
-        @media (max-width: 860px) {
+        /* 10 links + logo + the booking CTA need the full 1240px content box,
+           so the desktop bar only fits at the 1280px container width. Below
+           that it overflowed: "The Course" wrapped into the logo and the CTA
+           was pushed off-screen. The mobile panel carries both CTAs, so the
+           booking link stays reachable at every width. Was 860px. */
+        @media (max-width: 1279px) {
           .agc-desktop-nav { display: none !important; }
           .agc-mobile-toggle { display: flex !important; }
         }

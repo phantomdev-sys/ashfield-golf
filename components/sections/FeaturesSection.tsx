@@ -17,7 +17,7 @@ export default function FeaturesSection() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div style={{ background: "#2d5a3f", borderLeft: "4px solid #c9a84c", padding: "1.5rem", marginBottom: "3rem" }}>
           <p style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "clamp(13px, 2vw, 15px)", color: "rgba(245,240,232,0.85)", lineHeight: 1.7, fontStyle: "italic", margin: 0 }}>
-            Officially opened by <strong style={{ color: "#c9a84c", fontStyle: "normal" }}>Fred Daly MBE</strong> on 28th September 1990, Ashfield has grown into one of South Armagh's most beloved golfing destinations — offering a warm welcome to members, visitors, and societies alike.
+            Officially opened by <strong style={{ color: "#c9a84c", fontStyle: "normal" }}>Fred Daly MBE</strong> on 28th September 1990, Ashfield has grown into one of South Armagh&apos;s most beloved golfing destinations — offering a warm welcome to members, visitors, and societies alike.
           </p>
         </div>
 
