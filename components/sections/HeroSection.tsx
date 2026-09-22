@@ -12,8 +12,8 @@ const STATS = [
 export default function HeroSection() {
   return (
     <section style={{ position: "relative", minHeight: "100svh", background: "#1a3a2a", overflow: "hidden", display: "flex", alignItems: "center", paddingTop: 64 }}>
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/images/aerial-main.jpeg')", backgroundSize: "cover", backgroundPosition: "center 45%", opacity: 0.4 }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(26,58,42,0.95) 0%, rgba(26,58,42,0.65) 55%, rgba(26,58,42,0.15) 100%)" }} />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "url('/images/aerial-main.jpeg')", backgroundSize: "cover", backgroundPosition: "center 45%", opacity: 0.55 }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(26,58,42,0.96) 0%, rgba(26,58,42,0.90) 55%, rgba(26,58,42,0.28) 100%)" }} />
 
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1280, margin: "0 auto", padding: "2rem 1.25rem 8rem", width: "100%" }}>
         <div style={{ maxWidth: 600 }}>

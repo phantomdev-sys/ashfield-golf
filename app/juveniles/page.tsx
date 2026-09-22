@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GraduationCap, IdCard } from "lucide-react";
 import { MEMBERSHIP_RATES } from "@/lib/data";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Juvenile Golf",
@@ -26,17 +27,12 @@ const tileStyle: React.CSSProperties = {
 export default function JuvenilesPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Junior Golf</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Juvenile <em style={{ color: "#c9a84c" }}>Golf</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            Introducing the next generation to the game at Ashfield Golf Club.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/green-and-red-flag.webp"
+        eyebrow="Junior Golf"
+        title={<>Juvenile <em style={{ color: "#c9a84c" }}>Golf</em></>}
+        intro={<>Introducing the next generation to the game at Ashfield Golf Club.</>}
+      />
 
       <div style={{ background: "#f5f0e8", padding: "4rem 2rem 5rem" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>

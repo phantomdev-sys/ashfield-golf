@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sprout } from "lucide-react";
 import ComingSoon from "@/components/sections/ComingSoon";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Course Development",
@@ -16,17 +17,12 @@ const HISTORY = [
 export default function CourseDevelopmentPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>The Course</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Course <em style={{ color: "#c9a84c" }}>Development</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            We are continually investing in the future of Ashfield Golf Club. Updates on course development projects will appear here.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/sunset-through-trees.webp"
+        eyebrow="The Course"
+        title={<>Course <em style={{ color: "#c9a84c" }}>Development</em></>}
+        intro={<>We are continually investing in the future of Ashfield Golf Club. Updates on course development projects will appear here.</>}
+      />
       <ComingSoon
         icon={<Sprout size={28} />}
         message="Ashfield has seen continuous improvement since opening in 1990 — thousands of trees planted, new lakes added, and maturing greens and tee boxes that enhance both the challenge and the enjoyment of the course. Details of current and upcoming development projects will appear here."

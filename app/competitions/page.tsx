@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Competitions",
@@ -8,14 +9,11 @@ export const metadata: Metadata = {
 export default function CompetitionsPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Members</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Competitions & <em style={{ color: "#c9a84c" }}>Events</em>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/fairway-rise-conifers.webp"
+        eyebrow="Members"
+        title={<>Competitions & <em style={{ color: "#c9a84c" }}>Events</em></>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>

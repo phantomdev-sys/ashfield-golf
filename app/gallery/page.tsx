@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import type { Metadata } from "next";
 import GalleryGrid from "./GalleryGrid";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Photo Gallery",
@@ -11,12 +12,21 @@ export const metadata: Metadata = {
 
 // Server Component: read the gallery folder at render time and pass the
 // resulting web paths to the client grid.
+// The 2026 professional set is named course-2026-* so it can lead the grid;
+// everything else keeps its original gallery-NN ordering behind it.
+const NEW_SET_PREFIX = "course-2026-";
+
 function getGalleryImages(): string[] {
   const dir = path.join(process.cwd(), "public/images/gallery");
   return fs
     .readdirSync(dir)
-    .filter((file) => file.toLowerCase().endsWith(".jpg"))
-    .sort()
+    .filter((file) => /\.(jpg|webp)$/i.test(file))
+    .sort((a, b) => {
+      const aNew = a.startsWith(NEW_SET_PREFIX);
+      const bNew = b.startsWith(NEW_SET_PREFIX);
+      if (aNew !== bNew) return aNew ? -1 : 1;
+      return a.localeCompare(b);
+    })
     .map((file) => `/images/gallery/${file}`);
 }
 
@@ -25,14 +35,12 @@ export default function GalleryPage() {
 
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Photography</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0" }}>
-            Photo <em style={{ color: "#c9a84c" }}>Gallery</em>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/evening-fairway-trees.webp"
+        eyebrow="Photography"
+        title={<>Photo <em style={{ color: "#c9a84c" }}>Gallery</em></>}
+        intro={<>The course through the seasons — fairways, greens and evening light at Ashfield.</>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <GalleryGrid images={images} />

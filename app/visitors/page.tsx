@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { COURSE_INFO, GREEN_FEES } from "@/lib/data";
 import { ExternalLink, Phone } from "lucide-react";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Visitors",
@@ -10,15 +11,12 @@ export const metadata: Metadata = {
 export default function VisitorsPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Welcome</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Visitors to <em style={{ color: "#c9a84c" }}>Ashfield</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            You don&apos;t need to be a member to play. Walk-ins welcome, and our society packages offer outstanding value.
-          </p>
+      <PageHero
+        image="/images/course/oak-framed-fairway-evening.webp"
+        eyebrow="Welcome"
+        title={<>Visitors to <em style={{ color: "#c9a84c" }}>Ashfield</em></>}
+        intro={<>You don&apos;t need to be a member to play. Walk-ins welcome, and our society packages offer outstanding value.</>}
+      >
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.75rem" }}>
             <a href={COURSE_INFO.bookingUrl} target="_blank" rel="noopener noreferrer"
               aria-label="Book a Tee Time (opens in a new tab)"
@@ -30,8 +28,7 @@ export default function VisitorsPage() {
               <Phone size={14} aria-hidden="true" /> Call to Book
             </a>
           </div>
-        </div>
-      </div>
+      </PageHero>
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           {/* scrollMarginTop clears the fixed 64px navbar when linked to via #greenfees */}

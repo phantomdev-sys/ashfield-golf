@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import InteractiveScorecard from "@/components/scorecard/InteractiveScorecard";
 import { LOCAL_RULES } from "@/lib/data";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Interactive Scorecard",
@@ -10,17 +11,12 @@ export const metadata: Metadata = {
 export default function ScorecardPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Ashfield Golf Club</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Interactive <em style={{ color: "#c9a84c" }}>Scorecard</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            Select your tee, enter your handicap, and track your round hole by hole. Stableford points are calculated automatically.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/elevated-tee-view.webp"
+        eyebrow="Ashfield Golf Club"
+        title={<>Interactive <em style={{ color: "#c9a84c" }}>Scorecard</em></>}
+        intro={<>Select your tee, enter your handicap, and track your round hole by hole. Stableford points are calculated automatically.</>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <InteractiveScorecard />

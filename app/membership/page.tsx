@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MEMBERSHIP_RATES } from "@/lib/data";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Membership",
@@ -10,17 +11,12 @@ export const metadata: Metadata = {
 export default function MembershipPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Join Us</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Membership at <em style={{ color: "#c9a84c" }}>Ashfield</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(245,240,232,0.7)", lineHeight: 1.7, maxWidth: 560, fontWeight: 300 }}>
-            New members are welcome. All memberships include full GUI handicap eligibility, competition access, and a community built on a genuine love of the game.
-          </p>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/green-evening-light.webp"
+        eyebrow="Join Us"
+        title={<>Membership at <em style={{ color: "#c9a84c" }}>Ashfield</em></>}
+        intro={<>New members are welcome. All memberships include full GUI handicap eligibility, competition access, and a community built on a genuine love of the game.</>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "3rem" }}>

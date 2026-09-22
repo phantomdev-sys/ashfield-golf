@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Our History",
@@ -8,14 +9,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <div style={{ background: "#1a3a2a", padding: "5rem 2rem 3rem", marginTop: 68 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <span style={{ fontSize: 11, letterSpacing: "3px", textTransform: "uppercase", color: "#c9a84c", fontWeight: 500 }}>Est. 1990</span>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 48px)", color: "#f5f0e8", margin: "0.5rem 0 1rem" }}>
-            Our <em style={{ color: "#c9a84c" }}>History</em>
-          </h1>
-        </div>
-      </div>
+      <PageHero
+        image="/images/course/sunset-over-the-course.webp"
+        eyebrow="Est. 1990"
+        title={<>Our <em style={{ color: "#c9a84c" }}>History</em></>}
+      />
       <div style={{ background: "#f5f0e8", padding: "3rem 2rem" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", marginBottom: "3rem", alignItems: "start" }}>
@@ -32,7 +30,10 @@ export default function AboutPage() {
               </p>
             </div>
             <div style={{ background: "#2d5a3f", height: 280, borderRadius: 2, overflow: "hidden" }}>
-              <img src="/images/entrance-stone.jpg" alt="Ashfield Golf Course entrance" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }} />
+              <img src="/images/course/ashfield-boulder-entrance.webp"
+                alt="The engraved Ashfield Golf Course entrance stone, with the course beyond"
+                width={1600} height={800} loading="lazy" decoding="async"
+                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }} />
             </div>
           </div>
           <div style={{ background: "#1a3a2a", padding: "2.5rem", borderRadius: 2 }}>

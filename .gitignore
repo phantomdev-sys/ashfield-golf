@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw camera drops (huge, never commit)
+/public/images/Ashfield220926/
